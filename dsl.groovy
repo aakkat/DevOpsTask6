@@ -20,7 +20,7 @@ description("The Second Job: Deploying respective webpages on the server")
 triggers {  
 upstream('task6_job1', 'SUCCESS')
 }
-steps{
+steps {
 remoteShell('root@192.168.56.107:22') {
 command('''if sudo ls /root/dev3 | grep .html
 then
@@ -70,7 +70,7 @@ description("The Third Job: Testing the environments")
 triggers {
 upstream('task6_job2','SUCCESS')
 }
-steps{
+steps {
 remoteShell('root@192.168.56.107:22') {
 command('''if sudo kubectl get pods | grep webserver
 then

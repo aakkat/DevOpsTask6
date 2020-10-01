@@ -69,8 +69,7 @@ triggers {
 upstream('task6_job2','SUCCESS')
 }
 steps {
-remoteShell('root@192.168.56.107:22') {
-command('''if sudo kubectl get pods | grep webserver
+shell ('''if sudo kubectl get pods | grep webserver
 then
 web_status_code=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:31000)
 if [[ $web_status_code == 200 ]]

@@ -1,27 +1,8 @@
-job("task6_job1"){
-description("The First Job: Downloading content from GitHub")
-        
-scm{
-github('aakkat/DevOpsTask6', 'master')
-}
-triggers {
-scm('* * * * *')
-}
-steps {
-shell('''rm -rvf /root/task3/*
-cp -rvf * /root/task3/
-''')
-}
-}
-
 job('task6_job2'){
 description("The Second Job: Deploying respective webpages on the server")
 
-triggers {  
-upstream('task6_job1', 'SUCCESS')
-}
-steps {
-remoteShell('root@192.168.56.107:22') {
+steps{
+remoteShell('root@192.168.43.176:22') {
 command('''if sudo ls /root/dev3 | grep .html
 then
 if sudo kubectl get deployment | grep webserver
@@ -60,65 +41,6 @@ fi
 else
 echo "The code is not for PHP"
 fi''')
-}
-}
-}
-
-job("task6_job3"){
-description("The Third Job: Testing the environments")
-
-triggers {
-upstream('task6_job2','SUCCESS')
-}
-steps {
-remoteShell('root@192.168.56.107:22') {
-command('''if sudo kubectl get pods | grep webserver
-then
-web_status_code=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:31000)
-if [[ $web_status_code == 200 ]]
-then
-echo "The webserver is running fine"
-else
-echo "Something is wrong with the Web Server"
-exit 1
-fi
-else
-echo "No webserver running"
-fi
-if sudo kubectl get pods | grep phpserver
-then
-php_status_code=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:32000)
-if [[ $php_status_code == 200 ]]
-then
-echo "The PHP server is working fine"
-else
-echo "Something is wrong with the PHP server"
-exit 1
-fi
-else
-echo "No PHP server running"
-fi''')
-}
-}
-
-publishers {
-extendedEmail {
-recipientList('aakashkathunia@gmail.com')
-defaultSubject('Something is wrong with the build')
-defaultContent('The testing has been failed. Please Check!!')
-contentType('text/html')
-triggers {
-beforeBuild()
-stillUnstable {
-subject('Subject')
-content('Body')
-sendTo {
-developers()
-requester()
-culprits()
-}
-}
-}
 }
 }
 }

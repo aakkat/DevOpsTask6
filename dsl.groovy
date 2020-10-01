@@ -96,7 +96,6 @@ else
 echo "No PHP server running"
 fi''')
 }
-}
 
 publishers {
 extendedEmail {
@@ -113,6 +112,7 @@ sendTo {
 developers()
 requester()
 culprits()
+}
 }
 }
 }

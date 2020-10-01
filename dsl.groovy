@@ -8,8 +8,9 @@ triggers {
 scm('* * * * *')
 }
 steps {
-shell('''rm -rvf /root/task3/*'''
+shell('''rm -rvf /root/task3/*
 cp -rvf * /root/task3/
+'''
 )
 }
 }

@@ -1,8 +1,8 @@
 job('task6_job2'){
 description("The Second Job: Deploying respective webpages on the server")
 
-steps{
-remoteShell('root@192.168.43.176:22') {
+steps {
+shell('root@192.168.56.107:22') {
 command('''if sudo ls /root/dev3 | grep .html
 then
 if sudo kubectl get deployment | grep webserver

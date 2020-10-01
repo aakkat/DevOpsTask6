@@ -3,7 +3,7 @@ description("The Second Job: Deploying respective webpages on the server")
 
 steps {
 shell {
-('''if sudo ls /root/dev3 | grep .html
+command ('''if sudo ls /root/dev3 | grep .html
 then
 if sudo kubectl get deployment | grep webserver
 then

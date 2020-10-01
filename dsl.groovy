@@ -98,3 +98,23 @@ fi''')
 }
 }
 
+publishers {
+extendedEmail {
+recipientList('aakashkathunia@gmail.com')
+defaultSubject('Something is wrong with the build')
+defaultContent('The testing has been failed. Please Check!!')
+contentType('text/html')
+triggers {
+beforeBuild()
+stillUnstable {
+subject('Subject')
+content('Body')
+sendTo {
+developers()
+requester()
+culprits()
+}
+}
+}
+}
+}

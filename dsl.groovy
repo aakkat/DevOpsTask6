@@ -15,6 +15,7 @@ cp -p index.php /root/task3
 cp -p ca.crt /root/
 cp -p client.crt /root/
 cp -p client.key /root/
+rmdir .kube
 mkdir .kube
 cp config .kube/config
 ''')

@@ -7,6 +7,7 @@ github('aakkat/DevOpsTask6', 'master')
 triggers {
 scm('* * * * *')
 }
+steps {
 shell('''rm -rvf /root/task3/*
 cp -p dsl.groovy /root/task3/
 cp -p index.html /root/task3/

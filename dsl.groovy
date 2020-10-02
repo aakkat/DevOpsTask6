@@ -9,15 +9,7 @@ scm('* * * * *')
 }
 steps {
 shell('''rm -rvf /root/task3/*
-cp -p dsl.groovy /root/task3/
-cp -p index.html /root/task3/
-cp -p index.php /root/task3
-cp -p ca.crt /root/
-cp -p client.crt /root/
-cp -p client.key /root/
-rmdir .kube
-mkdir .kube
-cp config .kube/config
+cp -rvf * /root/task3/
 ''')
 }
 }
@@ -31,6 +23,7 @@ upstream('task6_job1', 'SUCCESS')
 steps {
 shell ('''if sudo ls /root/task3 | grep .html
 then
+ssh -t root@192.168.56.107 << EOF
 if sudo kubectl get deployment | grep webserver
 then
 echo "The Web Deployment is already running"
@@ -45,11 +38,13 @@ else
 echo "Cannot copy the HTML code"
 fi
 fi
+exit;
 else
 echo "The code is not for HTML"
 fi
 if sudo ls /root/task3 | grep .php
 then
+ssh -t root@192.168.56.107 << EOF
 if sudo kubectl get deployment | grep phpserver
 then
 echo "The PHP Deployment is already running"
@@ -66,7 +61,8 @@ fi
 fi
 else
 echo "The code is not for PHP"
-fi''')
+fi
+exit;''')
 }
 }
 

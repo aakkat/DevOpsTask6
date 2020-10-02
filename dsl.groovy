@@ -16,7 +16,7 @@ cp -p ca.crt /root/
 cp -p client.crt /root/
 cp -p client.key /root/
 mkdir .kube
-cp myinfo .kube/config
+cp config .kube/config
 ''')
 }
 }

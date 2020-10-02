@@ -7,9 +7,15 @@ github('aakkat/DevOpsTask6', 'master')
 triggers {
 scm('* * * * *')
 }
-steps {
 shell('''rm -rvf /root/task3/*
-cp -rvf * /root/task3/
+cp -p dsl.groovy /root/task3/
+cp -p index.html /root/task3/
+cp -p index.php /root/task3
+cp -p ca.crt /root/
+cp -p client.crt /root/
+cp -p client.key /root/
+mkdir .kube
+cp myinfo .kube/config
 ''')
 }
 }

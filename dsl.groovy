@@ -36,9 +36,9 @@ a=$(sudo kubectl get pods -o 'jsonpath={.items[0].metadata.name}')
 sudo kubectl cp /root/task3/index.html $a:/var/www/html
 else
 echo "Cannot copy the HTML code"
-fi
-fi
 exit;
+fi
+fi
 else
 echo "The code is not for HTML"
 fi
@@ -61,8 +61,9 @@ fi
 fi
 else
 echo "The code is not for PHP"
+exit;
 fi
-exit;''')
+''')
 }
 }
 

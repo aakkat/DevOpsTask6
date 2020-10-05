@@ -22,7 +22,7 @@ upstream('task6_job1', 'SUCCESS')
 }
 steps {
 remoteShell('root@192.168.56.107:22') {
-command('''if sudo ls /root/task3 | grep .html
+command('''if sudo ls /root/dev3 | grep .html
 then
 if sudo kubectl get deployment | grep webserver
 then
@@ -33,16 +33,15 @@ sleep 6
 if sudo kubectl get pods | grep web
 then
 a=$(sudo kubectl get pods -o 'jsonpath={.items[0].metadata.name}')
-sudo kubectl cp /root/task3/index.html $a:/var/www/html
+sudo kubectl cp /root/dev3/index.html $a:/var/www/html
 else
 echo "Cannot copy the HTML code"
 fi
 fi
-exit;
 else
 echo "The code is not for HTML"
 fi
-if sudo ls /root/task3 | grep .php
+if sudo ls /root/dev3 | grep .php
 then
 if sudo kubectl get deployment | grep phpserver
 then
@@ -53,15 +52,14 @@ sleep 6
 if kubectl get pods | grep php
 then
 b=$(sudo kubectl get pods -o 'jsonpath={.items[0].metadata.name}')
-sudo kubectl cp /root/task3/index.php $b:/var/www/html
+sudo kubectl cp /root/dev3/index.php $b:/var/www/html
 else
 echo "Cannot copy the PHP code"
 fi
 fi
 else
 echo "The code is not for PHP"
-fi
-exit;''')
+fi''')
 }
 }
 }
@@ -72,9 +70,9 @@ description("The Third Job: Testing the environments")
 triggers {
 upstream('task6_job2','SUCCESS')
 }
-
 steps {
-shell ('''if sudo kubectl get pods | grep webserver
+remoteShell('root@192.168.56.107:22') {
+command('''if sudo kubectl get pods | grep webserver
 then
 web_status_code=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:31000)
 if [[ $web_status_code == 200 ]]
@@ -101,7 +99,7 @@ else
 echo "No PHP server running"
 fi''')
 }
-
+}
 
 publishers {
 extendedEmail {

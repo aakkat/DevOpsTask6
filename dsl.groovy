@@ -74,7 +74,7 @@ steps {
 remoteShell('root@192.168.56.107:22') {
 command('''if sudo kubectl get pods | grep webserver
 then
-web_status_code=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:31000)
+web_status_code=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30100)
 if [[ $web_status_code == 200 ]]
 then
 echo "The webserver is running fine"
@@ -87,7 +87,7 @@ echo "No webserver running"
 fi
 if sudo kubectl get pods | grep phpserver
 then
-php_status_code=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:32000)
+php_status_code=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:32100)
 if [[ $php_status_code == 200 ]]
 then
 echo "The PHP server is working fine"
